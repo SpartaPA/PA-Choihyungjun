@@ -1,0 +1,7 @@
+# 99-robot-sensor.rules
+
+# Lidar
+SUBSYSTEM=="block", KERNEL=="loop*", ATTRS{size}=="32768", SYMLINK+="robot_lidar", MODE="0666"
+
+# imu
+SUBSYSTEM=="block", KERNEL=="loop*", ATTRS{size}=="49152", SYMLINK+="robot_imu", MODE="0666"
