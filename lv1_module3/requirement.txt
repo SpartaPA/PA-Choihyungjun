@@ -1,0 +1,28 @@
+# Lv.1 모듈 ③ — 로봇 좌표 변환 수학 라이브러리
+#
+# 설치 (Windows PowerShell)
+#   python -m venv .venv
+#   .\.venv\Scripts\Activate.ps1
+#   python -m pip install --upgrade pip
+#   pip install -r requirements.txt
+#
+# 설치 (macOS / Linux)
+#   python3 -m venv .venv
+#   source .venv/bin/activate
+#   python -m pip install --upgrade pip
+#   pip install -r requirements.txt
+
+numpy>=1.24
+matplotlib>=3.7
+scipy>=1.10
+pytest>=7.0
+jupyterlab>=4.0
+
+# ---------------------------------------------------------------------------
+# 이 정답본을 실제로 실행·검증한 버전 (2026-08 기준)
+#   Python 3.12.x / numpy 2.4.6 / scipy 1.15.3 / matplotlib 3.11.1
+#   pytest 9.1.1 / jupyterlab 4.6.3 / pyzmq 26.2.0
+#
+# 노트북 재생성용(제출에는 불필요): jupytext, nbformat, nbconvert
+#   pip install jupytext nbformat nbconvert
+# ---------------------------------------------------------------------------
