@@ -288,14 +288,138 @@ pa33@pa33-Legion-Pro-5-16IAX10:~/git/project/lv1_module2/ros2_ws$ ros2 run turtl
 - 데이터 미수신 진단 절차 : ① ros2 topic hz 로 흐름 확인 → ② ros2 topic list 로 토픽 존재 확인 → ③ ros2 node list 로 발행 노드 살아있는지 → ④ ros2 topic info -v 로 pub/sub 개수·QoS → ⑤ 상류(/turtle1/pose) 부터 역추적
 
 ### 2. RViz2 TF + 경유점 마커 캡처
-![tf_marker]
 
+![tf_marker](/lv1_module2/screenshots/tf_marker.png)
 
+### 3.ros2 bag play 재생 중 구독자 로그 — 기록된 토픽과 메시지 수: 
+- ros2 bag play 재생
+```shell
+pa33@pa33-Legion-Pro-5-16IAX10:~/git/project/lv1_module2/ros2_ws$ ros2 bag play bags/turtle_run
+[INFO] [1788770895.809424829] [rosbag2_storage]: Opened database 'bags/turtle_run/turtle_run_0.db3' for READ_ONLY.
+[INFO] [1788770895.809482998] [rosbag2_player]: Set rate to 1
+[INFO] [1788770895.812670168] [rosbag2_player]: Adding keyboard callbacks.
+[INFO] [1788770895.812744690] [rosbag2_player]: Press SPACE for Pause/Resume
+[INFO] [1788770895.812768292] [rosbag2_player]: Press CURSOR_RIGHT for Play Next Message
+[INFO] [1788770895.812773011] [rosbag2_player]: Press CURSOR_UP for Increase Rate 10%
+[INFO] [1788770895.812778561] [rosbag2_player]: Press CURSOR_DOWN for Decrease Rate 10%
+[INFO] [1788770895.813047155] [rosbag2_storage]: Opened database 'bags/turtle_run/turtle_run_0.db3' for READ_ONLY.
+```
 
-### 3.ros2 bag play 재생 중 구독자 로그 — 기록된 토픽과 메시지 수: ___
+- 재생 중 구독자 로그
+```shell
+pa33@pa33-Legion-Pro-5-16IAX10:~/git/project/lv1_module2/ros2_ws$ ros2 run turtle_py turtle_distance_subscriber
+[INFO] [1788770885.489672644] [turtle_distance_subscriber]: distance_watcher up
+[WARN] [1788770895.914264049] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770895.939142577] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770896.038978593] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770896.138785028] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770896.238892499] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770896.339067493] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770896.439012360] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770896.538956731] [turtle_distance_subscriber]: 경고: 원점거리 3.99 m > 임계 2.50 m
+[WARN] [1788770896.639125924] [turtle_distance_subscriber]: 경고: 원점거리 3.99 m > 임계 2.50 m
+[WARN] [1788770896.739253430] [turtle_distance_subscriber]: 경고: 원점거리 4.00 m > 임계 2.50 m
+[WARN] [1788770896.838863190] [turtle_distance_subscriber]: 경고: 원점거리 4.02 m > 임계 2.50 m
+[WARN] [1788770896.939118818] [turtle_distance_subscriber]: 경고: 원점거리 4.05 m > 임계 2.50 m
+[WARN] [1788770897.038951380] [turtle_distance_subscriber]: 경고: 원점거리 4.09 m > 임계 2.50 m
+[WARN] [1788770897.138977262] [turtle_distance_subscriber]: 경고: 원점거리 4.13 m > 임계 2.50 m
+[WARN] [1788770897.238645571] [turtle_distance_subscriber]: 경고: 원점거리 4.19 m > 임계 2.50 m
+[WARN] [1788770897.338880789] [turtle_distance_subscriber]: 경고: 원점거리 4.26 m > 임계 2.50 m
+[WARN] [1788770897.439122644] [turtle_distance_subscriber]: 경고: 원점거리 4.33 m > 임계 2.50 m
+[WARN] [1788770897.539143033] [turtle_distance_subscriber]: 경고: 원점거리 4.40 m > 임계 2.50 m
+```
+
+- 기록된 토픽과 노드 수
+```shell
+pa33@pa33-Legion-Pro-5-16IAX10:~/git/project/lv1_module2/ros2_ws$ ros2 bag info bags/turtle_run/
+
+Files:             turtle_run_0.db3
+Bag size:          169.4 KiB
+Storage id:        sqlite3
+Duration:          33.791962301s
+Start:             Sep  7 2026 17:47:05.308496573 (1788770825.308496573)
+End:               Sep  7 2026 17:47:39.100458874 (1788770859.100458874)
+Messages:          2451
+Topic information: Topic: /turtle1/pose | Type: turtlesim/msg/Pose | Count: 2113 | Serialization Format: cdr
+                   Topic: /turtle_distance | Type: std_msgs/msg/Float32 | Count: 338 | Serialization Format: cdr
+```
+
+- 기록된 토픽 수	: 2113 
+- 기록된 메시지	수	: 2451
 
 ### 4. pytest 통과 출력 — 작성한 테스트 3개의 의도
+- pytest 결과
+
+```shell
+pa33@pa33-Legion-Pro-5-16IAX10:~/git/project/lv1_module2/ros2_ws/src/turtle_py$ python3 -m pytest test/test_geometry.py -v
+=============================================================================== test session starts ================================================================================
+platform linux -- Python 3.10.12, pytest-6.2.5, py-1.10.0, pluggy-0.13.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/pa33/git/project/lv1_module2/ros2_ws/src/turtle_py
+plugins: ament-flake8-0.12.15, ament-lint-0.12.15, ament-xmllint-0.12.15, ament-pep257-0.12.15, launch-testing-1.0.14, launch-testing-ros-0.19.13, ament-copyright-0.12.15, colcon-core-0.21.0, cov-3.0.0
+collected 3 items                                                                                                                                                                  
+
+test/test_geometry.py::test_distance PASSED                                                                                                                                  [ 33%]
+test/test_geometry.py::test_normalize_angle PASSED                                                                                                                           [ 66%]
+test/test_geometry.py::test_reached_boundary PASSED                                                                                                                          [100%]
+
+================================================================================ 3 passed in 0.00s =================================================================================
+```
+
+- distance — 3-4-5 직각삼각형(정상) + 같은 점 거리 0(경계)
+- normalize_angle — 범위 안 값 유지(정상) + 2π→0 래핑 + π 초과→음수 래핑(경계)
+- reached — 정확히 tolerance면 도달, 바로 밖은 미도달(경계값)
 
 ### 5. 함수를 틀리게 바꿨을 때 실패 출력
+```shell
+pa33@pa33-Legion-Pro-5-16IAX10:~/git/project/lv1_module2/ros2_ws/src/turtle_py$ python3 -m pytest test/test_geometry.py -v
+=============================================================================== test session starts ================================================================================
+platform linux -- Python 3.10.12, pytest-6.2.5, py-1.10.0, pluggy-0.13.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/pa33/git/project/lv1_module2/ros2_ws/src/turtle_py
+plugins: ament-flake8-0.12.15, ament-lint-0.12.15, ament-xmllint-0.12.15, ament-pep257-0.12.15, launch-testing-1.0.14, launch-testing-ros-0.19.13, ament-copyright-0.12.15, colcon-core-0.21.0, cov-3.0.0
+collected 3 items                                                                                                                                                                  
 
-### 6. 예외 처리·logging 동작 확인: ___
+test/test_geometry.py::test_distance FAILED                                                                                                                                  [ 33%]
+test/test_geometry.py::test_normalize_angle PASSED                                                                                                                           [ 66%]
+test/test_geometry.py::test_reached_boundary PASSED                                                                                                                          [100%]
+
+===================================================================================== FAILURES =====================================================================================
+__________________________________________________________________________________ test_distance ___________________________________________________________________________________
+
+    def test_distance():
+        # 정상: 3-4-5 직각삼각형
+>       assert distance(3.0, 4.0) != pytest.approx(5.0)
+E       assert 5.0 != 5.0 ± 5.0e-06
+E        +  where 5.0 = distance(3.0, 4.0)
+E        +  and   5.0 ± 5.0e-06 = <function approx at 0x7b510bc93760>(5.0)
+E        +    where <function approx at 0x7b510bc93760> = pytest.approx
+
+test/test_geometry.py:10: AssertionError
+============================================================================= short test summary info ==============================================================================
+FAILED test/test_geometry.py::test_distance - assert 5.0 != 5.0 ± 5.0e-06
+=========================================================================== 1 failed, 2 passed in 0.04s ============================================================================
+```
+
+
+### 6. 예외 처리·logging 동작 확인: 
+- 예외 처리 (ex03_distance_publisher.py 수정)
+```shell
+        # 예외 처리: 잘못된 주기면 죽지 말고 경고 후 기본값으로
+        if rate <= 0.0:
+            self.get_logger().error(f'publish_rate={rate} 는 0 보다 커야 함 → 10.0 으로 대체')
+            rate = 10.0
+```
+
+- logging 동작 확인
+
+```shell
+pa33@pa33-Legion-Pro-5-16IAX10:~/git/project/lv1_module2/ros2_ws$ ros2 run turtle_py turtle_distance_publisher --ros-args -p publish_rate:=0.0
+[ERROR] [1788772941.616097174] [turtle_distance_publisher]: publish_rate=0.0 는 0 보다 커야 함 → 10.0 으로 대체
+[INFO] [1788772941.617447409] [turtle_distance_publisher]: turtle_distance_publisher 시작: publish_rate=10.0 Hz
+[WARN] [1788772941.718096425] [turtle_distance_publisher]: 아직 /turtle1/pose 를 받지 못했습니다
+[WARN] [1788772942.818019047] [turtle_distance_publisher]: 아직 /turtle1/pose 를 받지 못했습니다
+```
+
+
+
