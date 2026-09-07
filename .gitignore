@@ -1,0 +1,28 @@
+#  Ros colcon build 결과
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# C++
+*.o
+*.obj
+cpp_basics/main
+cpp_basics/stop_distance
+cpp_basics/sensors/sensor
+sensor_asan
+
+# OS / 에디터
+.DS_Store
+.vscode/
+*.swp
