@@ -71,7 +71,7 @@ class CoordinateChain:
                 raise KeyError(
                 f"'{path[-1]}' 은(는) root '{self.root}' 에 연결되어 있지 않음"
             ) from None
-            if cur is seen:
+            if cur in seen:
                 raise KeyError(f"프레임 그래프에 순환 있음")
             seen.add(cur)
             path.append(cur)
